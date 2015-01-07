@@ -1,0 +1,6 @@
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\bin\Debug\Ascii-Adventure.exe.config
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\obj\Debug\Ascii-Adventure.csprojResolveAssemblyReference.cache
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\bin\Debug\Ascii-Adventure.exe
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\bin\Debug\Ascii-Adventure.pdb
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\obj\Debug\Ascii-Adventure.exe
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\obj\Debug\Ascii-Adventure.pdb

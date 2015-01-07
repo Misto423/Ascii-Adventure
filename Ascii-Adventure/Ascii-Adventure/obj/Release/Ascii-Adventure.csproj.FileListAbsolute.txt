@@ -1,0 +1,5 @@
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\bin\Release\Ascii-Adventure.exe.config
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\bin\Release\Ascii-Adventure.exe
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\bin\Release\Ascii-Adventure.pdb
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\obj\Release\Ascii-Adventure.exe
+C:\Users\Shane\Downloads\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\Ascii-Adventure\obj\Release\Ascii-Adventure.pdb

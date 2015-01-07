@@ -853,7 +853,7 @@ namespace ASCIIR2
 		}
         private void SaveGame(int slot)
         {
-            Program.saver.SaveGame(slot, hud, player);
+            //Program.saver.SaveGame(slot, hud, player);
         }
 	}
 }
