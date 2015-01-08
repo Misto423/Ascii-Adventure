@@ -1,5 +1,4 @@
-Ascii-Adventure
-===============
+<h1>Ascii-Adventure</h1>
 <i><b>A zelda clone in C# console</b></i>
 
 <h2>Summary</h2>
