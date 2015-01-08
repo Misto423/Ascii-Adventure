@@ -9,30 +9,32 @@ namespace ASCIIR2
 {
     public class SaveHandler
     {
-        private FileStream[] saves;
+        private string[] saves;
         public SaveHandler()
         {
-            saves = new FileStream[4];
+            saves = new string[4];
             string path = Assembly.GetCallingAssembly().Location;
-            path = path.Remove(path.IndexOf("asciir2.exe",StringComparison.CurrentCultureIgnoreCase));
+            path = path.Remove(path.IndexOf("Ascii-Adventure.exe", StringComparison.CurrentCultureIgnoreCase));
             for (int q = 0; q < 4; q++)
             {
-                saves[q] = new FileStream(path + "save" + (q+1) + ".txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                saves[q] = path + "Saves/Save" + (q+1) + ".txt";
             }
         }
 
         public void SaveGame(int slot, HUD hudInfo, Player pInfo)
         {
-            byte[] total; 
-            byte[] date = Encoding.ASCII.GetBytes(DateTime.Now.ToFileTime().ToString() + "\n");
-            byte[] hInfo = Encoding.ASCII.GetBytes(hudInfo.Bombs.ToString() + "\n" + hudInfo.Keys.ToString() + "\n" +
-                hudInfo.MagicAmt.ToString() + "\n" + hudInfo.Money.ToString() + "\n" + hudInfo.Spheres.ToString() + "\n");
-            byte[] player = Encoding.ASCII.GetBytes(pInfo.curFacing.ToString() + "\n" + pInfo.CurHP.ToString() +
-                "/" + pInfo.HP.ToString() + "\n" + pInfo.location.ToString() + "\n" + pInfo.Sword.ToString());
-            total = date.Concat(hInfo).ToArray();
-            total = total.Concat(player).ToArray();
-            Array.Resize<byte>(ref total, 150); 
-            saves[slot].Write(total, 0, 150);
+            using (StreamWriter save = new StreamWriter(saves[slot], false, Encoding.ASCII, 150))
+            {
+                ConsoleColor last = hudInfo.Spheres.Count != 0 ? hudInfo.Spheres[hudInfo.Spheres.Count - 1] : ConsoleColor.Black;
+                string date = DateTime.Now.ToString() + "\n";
+                string hInfo = hudInfo.Bombs.ToString() + "\n" + hudInfo.Keys.ToString() + "\n" +
+                    hudInfo.MagicAmt.ToString() + "\n" + hudInfo.Money.ToString() + "\n" +
+                    last.ToString() + "\n";
+                string player = pInfo.curFacing.ToString() + "\n" + pInfo.CurHP.ToString() +
+                    "/" + pInfo.HP.ToString() + "\n" + pInfo.location.X.ToString() + "," + pInfo.location.Y.ToString() +
+                    "\n" + pInfo.Sword.ToString();
+                save.Write(date + hInfo + player);
+            }
         }
     }
 }

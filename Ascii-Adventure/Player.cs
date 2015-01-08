@@ -68,7 +68,7 @@ namespace ASCIIR2
 			if (c == 'w')
 			{
 				curFacing = FaceDirection.Up;
-                if (location.Y != 0)
+                if (location.Y > 0)
                 {
                     if (!CheckCollision())
                     {
@@ -88,7 +88,7 @@ namespace ASCIIR2
 			if (c == 's')
 			{
 				curFacing = FaceDirection.Down;
-                if (location.Y != Console.WindowHeight - 10)
+                if (location.Y < Console.WindowHeight - 10)
                 {
                     if (!CheckCollision())
                     {
@@ -108,7 +108,7 @@ namespace ASCIIR2
 			if (c == 'a')
 			{
 				curFacing = FaceDirection.Left;
-                if (location.X != 0)
+                if (location.X > 0)
                 {
                     if (!CheckCollision())
                     {
@@ -128,7 +128,7 @@ namespace ASCIIR2
 			if (c == 'd')
 			{
 				curFacing = FaceDirection.Right;
-                if (location.X != Console.WindowWidth - 1)
+                if (location.X < Console.WindowWidth - 1)
                 {
                     if (!CheckCollision())
                     {

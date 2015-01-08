@@ -201,10 +201,10 @@ namespace ASCIIR2
 		{
 			IntPtr buffer = CreateConsoleScreenBuffer(0x40000000 | 0x80000000, 0x00000001 | 0x00000002, IntPtr.Zero, 1, 0);
 
-			//Test Code
+#if DEBUG
 			Int32 error = Marshal.GetLastWin32Error();
 			if (error != 0) throw new System.ComponentModel.Win32Exception(error);
-
+#endif
 			SMALL_RECT readArea;
 
 			readArea.Top = 0;
@@ -214,15 +214,15 @@ namespace ASCIIR2
 			
 			WriteConsoleOutput(buffer, screenBufferArray, new COORD(80, 30), new COORD(0, 0), ref readArea);
 			//ClearBuffer();
-			//Test Code
+#if DEBUG
 			error = Marshal.GetLastWin32Error();
 			if (error != 0) throw new System.ComponentModel.Win32Exception(error);
-			
+#endif			
 			SetConsoleActiveScreenBuffer(buffer);
-			//Test Code
+#if DEBUG
 			error = Marshal.GetLastWin32Error();
 			if (error != 0) throw new System.ComponentModel.Win32Exception(error);
-
+#endif
 		}
 
 		public static void Flush()

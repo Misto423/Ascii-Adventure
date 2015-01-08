@@ -82,7 +82,7 @@ namespace ASCIIR2
 				EngineFunctions.COORD curPlayerPos = Game.player.location;
 
 				// modify x position
-				if (loc.X < curPlayerPos.X)
+				if (loc.X < curPlayerPos.X && loc.X < Console.WindowWidth - 3)
 				{
 					if (!CheckCollision(FaceDirection.Right))
 					{
@@ -90,7 +90,7 @@ namespace ASCIIR2
 						loc = new EngineFunctions.COORD((short)(loc.X + 1), loc.Y);
 					}
 				}
-				else if (loc.X > curPlayerPos.X)
+				else if (loc.X > curPlayerPos.X && loc.X > 2)
 				{
 					if (!CheckCollision(FaceDirection.Left))
 					{
@@ -100,7 +100,7 @@ namespace ASCIIR2
 				}
 
 				// modify y position
-				if (loc.Y < curPlayerPos.Y)
+				if (loc.Y < curPlayerPos.Y && loc.Y < Console.WindowHeight - 13)
 				{
 					if (!CheckCollision(FaceDirection.Down))
 					{
@@ -108,7 +108,7 @@ namespace ASCIIR2
 						loc = new EngineFunctions.COORD(loc.X, (short)(loc.Y + 1));
 					}
 				}
-				else if (loc.Y > curPlayerPos.Y)
+				else if (loc.Y > curPlayerPos.Y && loc.Y > 2)
 				{
 					if (!CheckCollision(FaceDirection.Up))
 					{
