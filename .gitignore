@@ -1,0 +1,10 @@
+##################
+## User-specific
+##################
+*.suo
+
+##################
+## Build
+##################
+Ascii-Adventure/bin/
+Ascii-Adventure/obj/
