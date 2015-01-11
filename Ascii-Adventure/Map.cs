@@ -12,6 +12,7 @@ namespace ASCIIR2
 		private Room[,] roomArray;
 		private int levelIndex = 0;
         public List<Tuple<EngineFunctions.COORD, EngineFunctions.COORD>> lockedDoors;
+        public List<Tuple<EngineFunctions.COORD, EngineFunctions.COORD>> unlockedDoors;
 		public static KeyValuePair<ConsoleColor,char> CurLevelInfo { get; private set; }
 
 		public Map(EngineFunctions.COORD start)
@@ -81,11 +82,27 @@ namespace ASCIIR2
                     lockedDoors = Stages.STAGE_NINE_DOORS;
 					break;
 			}
-
+            unlockedDoors = new List<Tuple<EngineFunctions.COORD, EngineFunctions.COORD>>();
 			roomArray = new Room[roomByteArray.GetLength(0), roomByteArray.GetLength(1)];
 			roomArray[roomLocation.Y, roomLocation.X] = new Room(roomByteArray[roomLocation.Y, roomLocation.X], false);
 			roomArray[roomLocation.Y, roomLocation.X].IsExplored = true;
 		}
+
+        public List<int> GetExploredRooms()
+        {
+            List<int> explored = new List<int>();
+            for (int y = 0; y < roomArray.GetLength(0); y++)
+            {
+                for (int x = 0; x < roomArray.GetLength(1); x++)
+                {
+                    if (roomArray[y,x] != null && roomArray[y,x].IsExplored)
+                    {
+                        explored.Add(y * roomArray.GetLength(1) + x);
+                    }
+                }
+            }
+            return explored;
+        }
 
 		public Room getRoom()
 		{
@@ -116,8 +133,17 @@ namespace ASCIIR2
 
         public void UnlockDoor(Tuple<EngineFunctions.COORD, EngineFunctions.COORD> door)
         {
-            if (!lockedDoors.Remove(door))
-                lockedDoors.Remove(new Tuple<EngineFunctions.COORD, EngineFunctions.COORD>(door.Item2, door.Item1));
+            Tuple<EngineFunctions.COORD, EngineFunctions.COORD> reverse = 
+                new Tuple<EngineFunctions.COORD, EngineFunctions.COORD>(door.Item2, door.Item1);
+            if (lockedDoors.Remove(door))
+            {
+                unlockedDoors.Add(door);
+            }
+            else
+            {
+                lockedDoors.Remove(reverse);
+                unlockedDoors.Add(reverse);
+            }
         }
 
         private FaceDirection GetDirection(Tuple<EngineFunctions.COORD, EngineFunctions.COORD> tuple)

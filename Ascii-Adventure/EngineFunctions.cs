@@ -203,7 +203,7 @@ namespace ASCIIR2
 
 #if DEBUG
 			Int32 error = Marshal.GetLastWin32Error();
-			if (error != 0) throw new System.ComponentModel.Win32Exception(error);
+			if (error != 0 && error != 183) throw new System.ComponentModel.Win32Exception(error);
 #endif
 			SMALL_RECT readArea;
 
@@ -216,12 +216,12 @@ namespace ASCIIR2
 			//ClearBuffer();
 #if DEBUG
 			error = Marshal.GetLastWin32Error();
-			if (error != 0) throw new System.ComponentModel.Win32Exception(error);
+            if (error != 0 && error != 183) throw new System.ComponentModel.Win32Exception(error);
 #endif			
 			SetConsoleActiveScreenBuffer(buffer);
 #if DEBUG
 			error = Marshal.GetLastWin32Error();
-			if (error != 0) throw new System.ComponentModel.Win32Exception(error);
+            if (error != 0 && error != 183) throw new System.ComponentModel.Win32Exception(error);
 #endif
 		}
 

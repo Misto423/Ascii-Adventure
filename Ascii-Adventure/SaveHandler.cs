@@ -23,10 +23,9 @@ namespace ASCIIR2
             }
         }
 
-        public void SaveGame(int slot, HUD hudInfo, Player pInfo)
+        public void SaveGame(int slot, HUD hudInfo, Player pInfo, List<int> exploredRooms, EngineFunctions.COORD room)
         {
-            using (StreamWriter save = File.Exists(saves[slot]) ? 
-                new StreamWriter(saves[slot], false, Encoding.ASCII, 150) : File.CreateText(saves[slot]))
+            using (StreamWriter save = new StreamWriter(saves[slot], false, Encoding.ASCII, 400))
             {
                 ConsoleColor last = hudInfo.Spheres.Count != 0 ? hudInfo.Spheres[hudInfo.Spheres.Count - 1] : ConsoleColor.Black;
                 save.WriteLine(DateTime.Now.ToString());
@@ -39,6 +38,11 @@ namespace ASCIIR2
                 save.WriteLine(pInfo.CurHP.ToString() + "/" + pInfo.HP.ToString());
                 save.WriteLine(pInfo.location.X.ToString() + "," + pInfo.location.Y.ToString());
                 save.WriteLine(pInfo.Sword.ToString());
+                foreach (int e in exploredRooms)
+                {
+                    save.Write(e + " ");
+                }
+                save.WriteLine("\n" + room.X + "," + room.Y);
             }
         }
 
@@ -54,7 +58,7 @@ namespace ASCIIR2
                     {
                         string date = reader.ReadLine();
                         string dungeon = reader.ReadLine();
-                        saveInfo.Add((i + 1) + ": " + date + "    " + dungeon + "Dungeon");
+                        saveInfo.Add((i + 1) + ": " + date + "   " + dungeon + " Dungeon");
                     }
                 }
                 catch (IOException)
