@@ -23,7 +23,8 @@ namespace ASCIIR2
             }
         }
 
-        public void SaveGame(int slot, HUD hudInfo, Player pInfo, List<int> exploredRooms, EngineFunctions.COORD room)
+        public void SaveGame(int slot, HUD hudInfo, Player pInfo, List<int> exploredRooms, 
+            EngineFunctions.COORD room, List<Tuple<EngineFunctions.COORD, EngineFunctions.COORD>> unlockedDoors)
         {
             using (StreamWriter save = new StreamWriter(saves[slot], false, Encoding.ASCII, 400))
             {
@@ -38,11 +39,15 @@ namespace ASCIIR2
                 save.WriteLine(pInfo.CurHP.ToString() + "/" + pInfo.HP.ToString());
                 save.WriteLine(pInfo.location.X.ToString() + "," + pInfo.location.Y.ToString());
                 save.WriteLine(pInfo.Sword.ToString());
+                save.WriteLine(room.X + "," + room.Y);
+                foreach (Tuple<EngineFunctions.COORD, EngineFunctions.COORD> door in unlockedDoors)
+                {
+                    save.WriteLine(door.Item1.X + "," + door.Item1.Y + " " + door.Item2.X + "," + door.Item2.Y);
+                }
                 foreach (int e in exploredRooms)
                 {
                     save.Write(e + " ");
                 }
-                save.WriteLine("\n" + room.X + "," + room.Y);
             }
         }
 
