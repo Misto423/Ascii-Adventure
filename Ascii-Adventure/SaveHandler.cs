@@ -15,26 +15,61 @@ namespace ASCIIR2
             saves = new string[4];
             string path = Assembly.GetCallingAssembly().Location;
             path = path.Remove(path.IndexOf("Ascii-Adventure.exe", StringComparison.CurrentCultureIgnoreCase));
+            path += "Saves\\";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             for (int q = 0; q < 4; q++)
             {
-                saves[q] = path + "Saves/Save" + (q+1) + ".txt";
+                saves[q] = path + "Save" + (q+1) + ".txt";
             }
         }
 
         public void SaveGame(int slot, HUD hudInfo, Player pInfo)
         {
-            using (StreamWriter save = new StreamWriter(saves[slot], false, Encoding.ASCII, 150))
+            using (StreamWriter save = File.Exists(saves[slot]) ? 
+                new StreamWriter(saves[slot], false, Encoding.ASCII, 150) : File.CreateText(saves[slot]))
             {
                 ConsoleColor last = hudInfo.Spheres.Count != 0 ? hudInfo.Spheres[hudInfo.Spheres.Count - 1] : ConsoleColor.Black;
-                string date = DateTime.Now.ToString() + "\n";
-                string hInfo = hudInfo.Bombs.ToString() + "\n" + hudInfo.Keys.ToString() + "\n" +
-                    hudInfo.MagicAmt.ToString() + "\n" + hudInfo.Money.ToString() + "\n" +
-                    last.ToString() + "\n";
-                string player = pInfo.curFacing.ToString() + "\n" + pInfo.CurHP.ToString() +
-                    "/" + pInfo.HP.ToString() + "\n" + pInfo.location.X.ToString() + "," + pInfo.location.Y.ToString() +
-                    "\n" + pInfo.Sword.ToString();
-                save.Write(date + hInfo + player);
+                save.WriteLine(DateTime.Now.ToString());
+                save.WriteLine(last.ToString());
+                save.WriteLine(hudInfo.Bombs.ToString());
+                save.WriteLine(hudInfo.Keys.ToString());
+                save.WriteLine(hudInfo.MagicAmt.ToString());
+                save.WriteLine(hudInfo.Money.ToString());
+                save.WriteLine(pInfo.curFacing.ToString());
+                save.WriteLine(pInfo.CurHP.ToString() + "/" + pInfo.HP.ToString());
+                save.WriteLine(pInfo.location.X.ToString() + "," + pInfo.location.Y.ToString());
+                save.WriteLine(pInfo.Sword.ToString());
             }
+        }
+
+        public List<string> GetSaveList()
+        {
+            List<string> saveInfo = new List<string>();
+
+            for (int i = 0; i <= 3; i++)
+            {
+                try
+                {
+                    using (StreamReader reader = new StreamReader(saves[i]))
+                    {
+                        string date = reader.ReadLine();
+                        string dungeon = reader.ReadLine();
+                        saveInfo.Add((i + 1) + ": " + date + "    " + dungeon + "Dungeon");
+                    }
+                }
+                catch (IOException)
+                {
+                    saveInfo.Add((i + 1) + ": No Save");
+                }
+            }
+
+            return saveInfo;
+        }
+
+        public void LoadGame()
+        {
+
+
         }
     }
 }
