@@ -104,7 +104,7 @@ namespace ASCIIR2
 
                     string mapLoc = reader.ReadLine();
                     room = new EngineFunctions.COORD(Int16.Parse(mapLoc.Substring(0, mapLoc.IndexOf(','))), 
-                        Int16.Parse(mapLoc.Substring(mapLoc.IndexOf(',') + 1));
+                        Int16.Parse(mapLoc.Substring(mapLoc.IndexOf(',') + 1)));
 
                     string[] expred = reader.ReadLine().Split(' ');
                     exploredRooms = new List<int>();
