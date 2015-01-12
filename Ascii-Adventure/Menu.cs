@@ -168,6 +168,11 @@ namespace ASCIIR2
             return -1;
         }
 
+        public int GetSelection()
+        {
+            return selection;
+        }
+
         public void DrawMenu()
         {
             EngineFunctions.DrawToConsole(new EngineFunctions.COORD(10, 5), line1, ConsoleColor.White);

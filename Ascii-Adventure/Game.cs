@@ -91,6 +91,12 @@ namespace ASCIIR2
             itemsOnMap = new List<Item>();
 		}
 
+        private void LoadSaveGame(int slot)
+        {
+            //Program.saver.LoadGame(slot);
+            //player = new Player(new EngineFunctions.COORD(pPos.X, pPos.Y));
+        }
+
 		private void PlayMusic()
 		{
 			while (true)
@@ -163,13 +169,15 @@ namespace ASCIIR2
 					switch (sel)
 					{
 						case 0:
-							startMenu = null;
+                            startMenu = null;
 							LoadGame();
 							break;
 						case 1:
-
+                            startMenu = null;
+                            LoadSaveGame(startMenu.GetSelection());
 							break;
 						case 2:
+                            startMenu = null;
 							Program.CloseGame();
 							break;
 					}

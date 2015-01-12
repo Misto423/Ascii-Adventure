@@ -11,7 +11,7 @@ namespace ASCIIR2
 	
 	public class Player
 	{
-		public FaceDirection curFacing { get; private set; }
+		public FaceDirection curFacing { get; set; }
 		public EngineFunctions.COORD location { get;  set; }
 		private Input playerInput;
 		private List<Enemy> enemiesInRoom;
