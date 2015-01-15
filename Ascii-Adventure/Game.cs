@@ -93,8 +93,18 @@ namespace ASCIIR2
 
         private void LoadSaveGame(int slot)
         {
-            //Program.saver.LoadGame(slot);
-            //player = new Player(new EngineFunctions.COORD(pPos.X, pPos.Y));
+            List<int> exploredRooms = new List<int>();
+            EngineFunctions.COORD room = new EngineFunctions.COORD();
+            List<Tuple<EngineFunctions.COORD,EngineFunctions.COORD>> doors = 
+                new List<Tuple<EngineFunctions.COORD,EngineFunctions.COORD>>();
+            Player p = player;
+            Program.saver.LoadGame(slot, ref hud, ref p, ref exploredRooms, ref room, ref doors);
+
+            player = p;
+            m = new Map(room);
+            RoomsExplored = exploredRooms.Count;
+            m.SetExploredRooms(exploredRooms);
+
         }
 
 		private void PlayMusic()
@@ -173,8 +183,8 @@ namespace ASCIIR2
 							LoadGame();
 							break;
 						case 1:
-                            startMenu = null;
                             LoadSaveGame(startMenu.GetSelection());
+                            startMenu = null;
 							break;
 						case 2:
                             startMenu = null;
@@ -861,7 +871,7 @@ namespace ASCIIR2
 		}
         private void SaveGame(int slot)
         {
-            Program.saver.SaveGame(slot, hud, player, m.GetExploredRooms(), m.roomLocation, m.unlockedDoors);
+            Program.saver.SaveGame(slot, hud, player, m);
         }
 	}
 }

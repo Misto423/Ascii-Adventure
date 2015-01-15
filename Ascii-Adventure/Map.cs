@@ -2,18 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace ASCIIR2
 {
+    [Serializable()]
 	public class Map
 	{
+        [XmlIgnore]
 		private byte[,] roomByteArray { get; set; }
+        [XmlAttribute("Room")]
 		public EngineFunctions.COORD roomLocation { get; set; }
+        [XmlIgnore]
 		private Room[,] roomArray;
+        [XmlAttribute("Level")]
 		private int levelIndex = 0;
+        [XmlIgnore]
         public List<Tuple<EngineFunctions.COORD, EngineFunctions.COORD>> lockedDoors;
+        [XmlAttribute("Unlocked")]
         public List<Tuple<EngineFunctions.COORD, EngineFunctions.COORD>> unlockedDoors;
+        [XmlIgnore]
 		public static KeyValuePair<ConsoleColor,char> CurLevelInfo { get; private set; }
+
+        public Map()
+        {
+            roomLocation = new EngineFunctions.COORD(0,0);
+            ChangeMap();
+        }
 
 		public Map(EngineFunctions.COORD start)
 		{
@@ -104,6 +119,14 @@ namespace ASCIIR2
             return explored;
         }
 
+        public void SetExploredRooms(List<int> rooms)
+        {
+            foreach (int i in rooms)
+            {
+                roomArray[i / roomArray.GetLength(1), i % roomArray.GetLength(1)].IsExplored = true;
+            }
+        }
+
 		public Room getRoom()
 		{
 			return roomArray[roomLocation.Y, roomLocation.X];
@@ -144,6 +167,11 @@ namespace ASCIIR2
                 lockedDoors.Remove(reverse);
                 unlockedDoors.Add(reverse);
             }
+        }
+
+        public void UnlockDoor(List<Tuple<EngineFunctions.COORD, EngineFunctions.COORD>> doors)
+        {
+
         }
 
         private FaceDirection GetDirection(Tuple<EngineFunctions.COORD, EngineFunctions.COORD> tuple)

@@ -3,37 +3,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Xml.Serialization;
 
 namespace ASCIIR2
 {
 	public enum FaceDirection { Up, Down, Left, Right, noDir }
 	public enum SwordType { Wood, Short, Great }
 	
-	public class Player
+    [Serializable()]
+	public class Player : IXmlSerializable
 	{
-		public FaceDirection curFacing { get; set; }
-		public EngineFunctions.COORD location { get;  set; }
+        [XmlIgnore]
 		private Input playerInput;
+        [XmlIgnore]
 		private List<Enemy> enemiesInRoom;
+        [XmlIgnore]
 		private bool transition = true;
+        [XmlIgnore]
 		public bool TookDamage { get; set; }
+        [XmlIgnore]
 		public bool SwingSword { get; set; }
+        [XmlIgnore]
 		public bool IsBombPlaced { get; set; }
+        [XmlIgnore]
 		public bool IsMagicUsed { get; set; }
+        [XmlIgnore]
         public bool UseKey { get; set; }
+        [XmlIgnore]
         public bool ShouldSave { get; set; }
+        [XmlIgnore]
         public byte SaveSlot { get; set; }
+        [XmlIgnore]
 		public EngineFunctions.COORD bombLoc { get; private set; }
 		//--------------------
 		public int HP = 6;
 		public int CurHP { get; set; }
 		public SwordType Sword { get; set; }
 		public ItemType CurItem { get; set; }
+        public FaceDirection curFacing { get; set; }
+        public EngineFunctions.COORD location { get; set; }
 		//---------------------
+        [XmlIgnore]
 		Thread inputThread;
+        [XmlIgnore]
 		TimeSpan timeSinceUpdate = TimeSpan.Zero;
+        [XmlIgnore]
 		char c;
+        [XmlIgnore]
 		private bool SwordHit = false;
+
+        public Player()
+        {
+            playerInput = new Input();
+            location = new EngineFunctions.COORD(1,1);
+            CurHP = HP;
+            curFacing = FaceDirection.Down;
+            Sword = SwordType.Wood;
+            SwingSword = false;
+            CurItem = ItemType.Magic;
+            inputThread = new Thread(new ThreadStart(GetInput));
+            inputThread.Start();
+        }
 
 		public Player(EngineFunctions.COORD p)
 		{
@@ -620,5 +650,25 @@ namespace ASCIIR2
 				IsMagicUsed = true;
 			}
 		}
-	}
+
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(System.Xml.XmlReader reader)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteAttributeString("CurHp", CurHP.ToString());
+            writer.WriteAttributeString("MaxHp", HP.ToString());
+            writer.WriteAttributeString("Sword", Sword.ToString());
+            writer.WriteAttributeString("Item", CurItem.ToString());
+            writer.WriteAttributeString("Face", curFacing.ToString());
+            writer.WriteAttributeString("Location", location.X.ToString() + "," + location.Y.ToString());
+        }
+    }
 }

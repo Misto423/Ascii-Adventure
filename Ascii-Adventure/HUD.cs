@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace ASCIIR2
 {
+    [Serializable()]
 	public class HUD
 	{
+        [XmlAttribute("Keys")]
 		public byte Keys { get; set; }
+        [XmlAttribute("Bombs")]
 		public byte Bombs { get; set; }
+        [XmlAttribute("Magic")]
 		public byte MagicAmt { get; set; }
+        [XmlAttribute("Cash")]
 		public int Money { get; set; }
+        [XmlIgnore]
 		public List<ConsoleColor> Spheres { get; set; }
 
 		public HUD()
